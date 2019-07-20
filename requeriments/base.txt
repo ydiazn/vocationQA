@@ -1,0 +1,26 @@
+# Django
+Django==2.2.3
+django-crispy-forms
+django-model-utils
+django-floppyforms
+django-rest-framework
+django-registration
+django-braces
+django-vanilla-views
+django-filter
+
+# testing
+factory_boy
+tox
+coverage
+
+# Postgresql
+psycopg2
+
+# Documentation
+Sphinx
+
+# time
+python-dateutil
+
+numpy
