@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+<h1>New question</h1>
+<form method="POST" action="">
+    {{ form|crispy }}
+    {% csrf_token %}
+    <button class='btn btn-success' type="submit">
+        <i class="fa fa-check"></i> Submit
+    </button>
+</form>
+{% endblock body %}

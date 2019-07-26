@@ -15,7 +15,7 @@ tox
 coverage
 
 # Postgresql
-psycopg2
+psycopg2-binary
 
 # Documentation
 Sphinx

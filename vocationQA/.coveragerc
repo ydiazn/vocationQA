@@ -1,0 +1,3 @@
+[run]
+source = qa
+omit = qa/migrations/*, qa/tests/*, qa/apps.py
