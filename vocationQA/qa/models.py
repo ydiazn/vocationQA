@@ -7,7 +7,7 @@ from model_utils.models import TimeStampedModel
 
 # Create your models here.
 class Question(TimeStampedModel):
-    slug = models.SlugField(editable=False)
+    slug = models.SlugField(editable=False, max_length=150)
     title = models.CharField(max_length=150)
     body = models.TextField()
     user = models.ForeignKey(
