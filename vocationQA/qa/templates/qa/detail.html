@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block body %}
-<h1>{{ object.title }}</h1>
-<p>{{ object.body }}</p>
+<h1>{{ question.title }}</h1>
+<div class="text-right">
+    <span><i class="fa fa-user"></i> {{ question.user }}</span>
+    <span><i class="fa fa-clock-o"> {{ question.created }}</i></span>
+</div>
+<p>{{ question.body }}</p>
+<hr/>
+{% include 'qa/answers.html' %}
+{% include 'qa/reply.html' %}
 {% endblock body %}

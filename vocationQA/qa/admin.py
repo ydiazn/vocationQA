@@ -1,9 +1,14 @@
 from django.contrib import admin
-from .models import Question
+from . import models
 
 # Register your models here.
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('slug', 'title', 'body', 'user', 'created')
+    list_display = ('id', 'slug', 'title', 'body', 'user', 'created')
 
 
-admin.site.register(Question, QuestionAdmin)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ('question', 'body', 'user', 'created')
+
+
+admin.site.register(models.Question, QuestionAdmin)
+admin.site.register(models.Answer, AnswerAdmin)

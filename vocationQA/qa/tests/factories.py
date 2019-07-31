@@ -9,7 +9,7 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = settings.AUTH_USER_MODEL
 
     email = 'jhon@email.com'
-    username = 'jhon'
+    username = factory.Faker('user_name')
     password = 'secret'
     first_name = 'Jhon'
     last_name = 'Doe'
@@ -29,3 +29,12 @@ class QuestionFactory(factory.django.DjangoModelFactory):
     title = 'My first question'
     body = 'bla bla bla bla'
     user = factory.SubFactory(UserFactory)
+
+
+class AnswerFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Answer
+
+    body = 'bla bla bla bla'
+    user = factory.SubFactory(UserFactory)
+    question = factory.SubFactory(QuestionFactory)
