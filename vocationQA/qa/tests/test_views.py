@@ -282,17 +282,12 @@ class ReplyAnswerTest(TestCase):
 
     def test_reply_fail(self):
         '''
-        Answer form submitted without required fields
+        Answer form submitted without required body field
         '''
         request_factory = RequestFactory()
         question = factories.QuestionFactory.create()
         user = question.user
-        request = request_factory.post(
-            '/qa/question/reply/',
-            {
-                'body': 'asdh ashd asdhasjdh asjdh'
-            }
-        )
+        request = request_factory.post('/qa/question/reply/')
         # This is user that can processes answers
         request.user = user
 

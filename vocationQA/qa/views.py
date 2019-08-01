@@ -46,12 +46,6 @@ class QuestionDetailView(DetailView):
         '''
         return self.object.answer_set.all()
 
-    def get_create_answer_form(self):
-        return forms.AnswerForm(initial={
-            'user': self.request.user,
-            'question': self.object
-        })
-
     def get_context_data(self, **kwargs):
         '''
         view.get_context_data(...) => dict: get_context_data
@@ -68,7 +62,7 @@ class QuestionDetailView(DetailView):
         # Only send create answer form if user is authenticated
         if self.request.user.is_authenticated:
             context.update({
-                'create_answer_form': self.get_create_answer_form()
+                'create_answer_form': forms.AnswerQuestionForm()
             })
         # Only send forms if user can accept and reject answers
         if can_accept_answer:
@@ -87,16 +81,13 @@ def acceptance_answer(request, pk, slug):
 
     if request.method == 'POST':
         form = forms.AnswerAceptanceForm(request.POST, instance=answer)
-        if form.is_valid():
-            form.save()
-            return http.HttpResponseRedirect(
-                reverse(
-                    'qa:detail',
-                    kwargs={'pk': question.pk, 'slug': question.slug}
-                )
+        form.save()
+        return http.HttpResponseRedirect(
+            reverse(
+                'qa:detail',
+                kwargs={'pk': question.pk, 'slug': question.slug}
             )
-        else:
-            return http.HttpResponseForbidden()
+        )
     else:
         return http.HttpResponseNotAllowed(['GET'])
 
@@ -106,9 +97,13 @@ def reply(request, pk, slug):
     question = get_object_or_404(models.Question, pk=pk, slug=slug)
 
     if request.method == 'POST':
-        form = forms.AnswerForm(request.POST)
+        form = forms.AnswerQuestionForm(request.POST)
         if form.is_valid():
-            form.save()
+            answer = form.save(commit=False)
+            answer.user = request.user
+            answer.question = question
+            answer.save()
+
             return http.HttpResponseRedirect(
                 reverse(
                     'qa:detail',
