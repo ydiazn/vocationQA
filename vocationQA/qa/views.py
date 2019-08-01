@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django import http
+from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
@@ -10,6 +11,11 @@ from . import forms, models
 
 
 # Create your views here.
+class QuestionListView(ListView):
+    template_name = 'qa/questions.html'
+    model = models.Question
+
+
 class QuestionCreateView(LoginRequiredMixin, CreateView):
     form_class = forms.QuestionForm
     template_name = 'qa/ask.html'

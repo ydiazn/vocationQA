@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body%}
+<div class="text-right">
+    <a href="{% url 'qa:ask' %}" class="btn btn-primary">Ask</a>
+</div>
+{% for question in object_list %}
+<a href="{% url 'qa:detail' pk=question.pk slug=question.slug %}">
+    <h3>{{ question.title }}</h3>
+</a>
+<div class="text-right">
+    <span><i class="fa fa-user"></i> {{ question.user }}</span>
+    <span><i class="fa fa-clock-o"> {{ question.created }}</i></span>
+</div>
+<p class="text-left">{{ question.body }}</p>
+<hr/>
+{% endfor %}
+{% endblock body %}

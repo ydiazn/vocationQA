@@ -20,5 +20,11 @@ urlpatterns = [
         views.reply,
         name='reply'
     )
+    ,
+    path(
+        'question/',
+        views.QuestionListView.as_view(),
+        name='questions'
+    )
 ]
 

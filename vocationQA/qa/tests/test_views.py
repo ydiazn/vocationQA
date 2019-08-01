@@ -334,3 +334,43 @@ class ReplyAnswerTest(TestCase):
             response.url,
             '/qa/question/{}/{}/'.format(question.pk, question.slug)
         )
+
+
+class QuestionListTest(TestCase):
+    def test_no_questions(self):
+        request_factory = RequestFactory()
+        request = request_factory.get('/qa/question/')
+        request.user = AnonymousUser()
+
+        SessionMiddleware().process_request(request)
+        request.session.save()
+
+        view = views.QuestionListView()
+        view.setup(request)
+        response = view.dispatch(request)
+        context = view.get_context_data()
+        self.assertEqual(len(context['object_list']), 0)
+        self.assertEqual(response.status_code, 200)
+
+    def test_with_questions(self):
+        request_factory = RequestFactory()
+        request = request_factory.get('/qa/question/')
+        request.user = AnonymousUser()
+
+        questions = [
+            factories.QuestionFactory.create(title='first'),
+            factories.QuestionFactory.create(title='last'),
+        ]
+        questions.reverse()
+
+        SessionMiddleware().process_request(request)
+        request.session.save()
+
+        view = views.QuestionListView()
+        view.setup(request)
+        response = view.dispatch(request)
+        context = view.get_context_data()
+        self.assertEqual(len(context['object_list']), 2)
+        # Veryfing list ordering
+        self.assertEqual(list(context['object_list']), questions)
+        self.assertEqual(response.status_code, 200)
