@@ -6,7 +6,7 @@
 Welcome to vocationQA's documentation!
 ======================================
 
-vocationQA is Q&A type system for professional vocation formation.
+vocationQA is Q&A type system for support professional vocation formation.
 It is an ouput form a research project of Granma University for support
 vocational formation in Cuba.
 
@@ -16,7 +16,9 @@ It is was developed with Django python web framework.
    :maxdepth: 2
    :caption: Contents:
 
-   usage/installation
+   development/installation
+   doc/autodoc
+   doc/restructuredtext
 
 
 
