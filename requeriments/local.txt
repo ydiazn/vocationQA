@@ -1,3 +1,6 @@
 -r base.txt
 
 django-debug-toolbar
+
+autopep8
+pep8
