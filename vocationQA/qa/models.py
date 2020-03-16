@@ -1,47 +1,90 @@
 import uuid as uuid_lib
+from django.db.models import Count
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.urls.base import reverse
 from django.utils.text import slugify
 from model_utils.models import TimeStampedModel
 
 # Create your models here.
-class Question(TimeStampedModel):
-    slug = models.SlugField(editable=False, max_length=150)
-    title = models.CharField(max_length=150)
-    body = models.TextField()
-    user = models.ForeignKey(
+class ContarVotos(models.Model):
+    votos_positivos = models.PositiveIntegerField(default=0)
+    votos_negativos = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        abstract = True
+
+
+class Etiqueta(models.Model):
+    nombre = models.CharField(max_length=150)
+
+
+class Discusion(TimeStampedModel):
+    cerrada = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.pregunta)
+
+
+class Publicacion(TimeStampedModel):
+    TIPO_PUBLICACION = (
+        (0, 'comentario'),
+        (1, 'pregunta'),
+        (2, 'respuesta'),
+    )
+    tipo = models.IntegerField(null=True, choices=TIPO_PUBLICACION)
+    slug = models.SlugField(editable=False, max_length=255)
+    cuerpo = models.TextField()
+    autor = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
+class Pregunta(Publicacion):
+    titulo = models.CharField(max_length=150)
+    discusion = models.OneToOneField(
+        Discusion, on_delete=models.CASCADE)
+    etiquetas = models.ManyToManyField(Etiqueta, blank=True)
 
     class Meta:
         ordering = ['-created']
 
     def __str__(self):
-        return self.title
+        return self.titulo
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        '''
+        Save redefinition to set slug and discusion fields
+        '''
+        self.tipo = 1
+        self.slug = slugify(self.titulo)
+        self.discusion = Discusion.objects.create()
+
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('qa:detail', kwargs={'pk': self.pk, 'slug': self.slug})
 
     def user_can_accept_answer(self, user):
-        return self.user == user
+        return self.autor == user
 
 
-class Answer(TimeStampedModel):
-    slug = models.SlugField(editable=False)
-    body = models.TextField()
-    user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    question = models.ForeignKey(
-        to=Question, on_delete=models.CASCADE)
-    accepted = models.BooleanField(default=False)
+class Respuesta(ContarVotos, Publicacion):
+    discusion = models.ForeignKey(
+        to=Discusion, on_delete=models.CASCADE, related_name='respuestas')
+    aceptada = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-created']
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.body[:50])
+        self.slug = slugify(self.cuerpo[:50])
         super().save(*args, **kwargs)
+
+
+class Comentario(ContarVotos, Publicacion):
+    publicacion = models.ForeignKey(
+       to=Publicacion,
+       on_delete=models.CASCADE,
+       related_name='comentarios'
+    )

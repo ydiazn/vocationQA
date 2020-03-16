@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/preguntas.css' %}"/>
+{% endblock css %}
+{% block body%}
+<div class="text-right">
+    <a href="" class="btn btn-primary">Formula un pregunta</a>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="discusion-wrapper">
+            {% for discusion in object_list %}
+            <div class="discusion-item">
+                <div class="row">
+                    <div class="col-lg-1">
+                        <div class="text-center">
+                            <h4>{{ discusion.respuestas__count }}</h4>
+                            <small>Respuestas</small>
+                        </div>
+                    </div>
+                    <div class="col-lg-11">
+                        <a class="discusion-titulo" href="#"> 
+                            {{ discusion.pregunta.titulo }}
+                        </a>
+                        <div class="discusion-info">
+                            <span><i class="fa fa-user"></i> {{ discusion.pregunta.autor }}</span> &nbsp;
+                            <span><i class="fa fa-clock-o"> {{ discusion.pregunta.created }}</i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock body %}

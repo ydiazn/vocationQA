@@ -2,13 +2,17 @@ from django.contrib import admin
 from . import models
 
 # Register your models here.
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'slug', 'title', 'body', 'user', 'created')
+class PreguntaAdmin(admin.ModelAdmin):
+    fields = ('titulo', 'autor', 'cuerpo', 'etiquetas')
+    list_display = ('id', 'slug', 'titulo', 'cuerpo', 'autor', 'created')
+
+class RespuestaAdmin(admin.ModelAdmin):
+    fields = ('autor', 'cuerpo', 'discusion', 'votos_positivos')
+    list_display = (
+        'id', 'slug', 'cuerpo', 'autor', 'discusion',
+        'votos_positivos', 'votos_negativos', 'created'
+    )
 
 
-class AnswerAdmin(admin.ModelAdmin):
-    list_display = ('question', 'body', 'user', 'created')
-
-
-admin.site.register(models.Question, QuestionAdmin)
-admin.site.register(models.Answer, AnswerAdmin)
+admin.site.register(models.Pregunta, PreguntaAdmin)
+admin.site.register(models.Respuesta, RespuestaAdmin)

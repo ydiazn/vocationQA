@@ -1,0 +1,14 @@
+body {
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    color: #676a6c;
+    background-color: #f3f3f4;
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+}
+
+a {
+    cursor: pointer;
+}

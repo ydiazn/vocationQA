@@ -19,5 +19,5 @@ import qa.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('qa/', include(qa.urls, namespace='qa'))
+    path('', include(qa.urls, namespace='qa'))
 ]

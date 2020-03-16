@@ -1,0 +1,27 @@
+.discusion-wrapper {
+    padding: 20px 10px 40px;
+}
+
+.discusion-item {
+    padding: 20px 25px;
+    border-top: 1px solid #e7eaec;
+    background-color: white;
+}
+
+.discusion-titulo {
+    display: block;
+    color: rgb(103, 106, 108);
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
+.discusion-info {
+    color: #b4b6b8;
+    font-size: 12px;
+}
+
+.discusion-info a {
+    margin-right: 10px;
+}
