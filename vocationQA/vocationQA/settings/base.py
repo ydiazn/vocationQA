@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(FILE)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("VOCATION_SECRET_KEY")
 
 
 # Application definition
@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'vocationQA.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get("DB_NAME"),
-        'HOST': os.environ.get("DB_HOST"),
-        'PORT': os.environ.get("DB_PORT"),
-        'USER': os.environ.get("DB_USER"),
-        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'NAME': os.environ.get("VOCATION_DB_NAME"),
+        'HOST': os.environ.get("VOCATION_DB_HOST"),
+        'PORT': os.environ.get("VOCATION_DB_PORT"),
+        'USER': os.environ.get("VOCATION_DB_USER"),
+        'PASSWORD': os.environ.get("VOCATION_DB_PASSWORD"),
         'ATOMIC_REQUESTS': True,
     }
 }

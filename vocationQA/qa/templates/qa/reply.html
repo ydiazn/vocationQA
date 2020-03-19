@@ -1,9 +1,0 @@
-{% load crispy_forms_tags %}
-<h3>Reply</h3>
-<form method="POST" action="{% url 'qa:reply' pk=question.pk slug=question.slug %}">
-    {{ create_answer_form|crispy }}
-    {% csrf_token %}
-    <button class='btn btn-success' type="submit">
-        <i class="fa fa-check"></i> Submit
-    </button>
-</form>
