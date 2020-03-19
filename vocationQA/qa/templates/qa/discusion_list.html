@@ -4,9 +4,6 @@
 <link rel="stylesheet" href="{% static 'css/preguntas.css' %}"/>
 {% endblock css %}
 {% block body%}
-<div class="text-right">
-    <a href="" class="btn btn-primary">Formula un pregunta</a>
-</div>
 <div class="row">
     <div class="col-lg-12">
         <div class="discusion-wrapper">
@@ -15,11 +12,17 @@
                 <div class="row">
                     <div class="col-lg-1">
                         <div class="text-center">
+                            <h4>{{ discusion.pregunta.votos_positivos }}</h4>
+                            <small>Votos</small>
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <div class="text-center">
                             <h4>{{ discusion.respuestas__count }}</h4>
                             <small>Respuestas</small>
                         </div>
                     </div>
-                    <div class="col-lg-11">
+                    <div class="col-lg-10">
                         <a class="discusion-titulo" href="#"> 
                             {{ discusion.pregunta.titulo }}
                         </a>

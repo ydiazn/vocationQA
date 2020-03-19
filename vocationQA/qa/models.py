@@ -40,7 +40,7 @@ class Publicacion(TimeStampedModel):
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
-class Pregunta(Publicacion):
+class Pregunta(ContarVotos, Publicacion):
     titulo = models.CharField(max_length=150)
     discusion = models.OneToOneField(
         Discusion, on_delete=models.CASCADE)

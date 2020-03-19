@@ -3,8 +3,8 @@ from . import models
 
 # Register your models here.
 class PreguntaAdmin(admin.ModelAdmin):
-    fields = ('titulo', 'autor', 'cuerpo', 'etiquetas')
-    list_display = ('id', 'slug', 'titulo', 'cuerpo', 'autor', 'created')
+    fields = ('titulo', 'autor', 'cuerpo', 'etiquetas', 'votos_positivos')
+    list_display = ('id', 'slug', 'titulo', 'votos_positivos', 'autor',)
 
 class RespuestaAdmin(admin.ModelAdmin):
     fields = ('autor', 'cuerpo', 'discusion', 'votos_positivos')
