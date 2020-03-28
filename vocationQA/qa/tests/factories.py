@@ -1,7 +1,8 @@
-from qa import models
-from django.conf import settings
 import factory
 
+from django.conf import settings
+
+from qa import models
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -22,19 +23,26 @@ class UserFactory(factory.django.DjangoModelFactory):
         return manager.create_user(*args, **kwargs)
 
 
-class QuestionFactory(factory.django.DjangoModelFactory):
+class DiscusionFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = models.Question
+        model = models.Discusion
 
-    title = 'My first question'
-    body = 'bla bla bla bla'
-    user = factory.SubFactory(UserFactory)
+    cerrada = False
 
 
-class AnswerFactory(factory.django.DjangoModelFactory):
+class PreguntaFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = models.Answer
+        model = models.Pregunta
 
-    body = 'bla bla bla bla'
-    user = factory.SubFactory(UserFactory)
-    question = factory.SubFactory(QuestionFactory)
+    titulo = factory.Faker('sentence', nb_words=10)
+    cuerpo = factory.Faker('text')
+    autor = factory.SubFactory(UserFactory)
+
+
+class RespuestaFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Respuesta
+
+    cuerpo = factory.Faker('text')
+    autor = factory.SubFactory(UserFactory)
+    discusion = factory.SubFactory(DiscusionFactory)

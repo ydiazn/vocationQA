@@ -23,6 +23,9 @@ class Etiqueta(models.Model):
 class Discusion(TimeStampedModel):
     cerrada = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['-pregunta__created']
+
     def __str__(self):
         return str(self.pregunta)
 
@@ -61,9 +64,6 @@ class Pregunta(ContarVotos, Publicacion):
         self.discusion = Discusion.objects.create()
 
         super().save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        return reverse('qa:detail', kwargs={'pk': self.pk, 'slug': self.slug})
 
     def user_can_accept_answer(self, user):
         return self.autor == user

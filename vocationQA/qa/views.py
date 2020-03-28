@@ -32,6 +32,5 @@ class IndexView(ListView):
         # Optimizacion: reduccion de las consultas SQL necesarias para
         # para obtener la informacion de la pregunta aasociada a la discusion.
         # https://docs.djangoproject.com/en/3.0/ref/models/querysets/#select-related
-        queryset = queryset.select_related('pregunta')
-
+        queryset = queryset.select_related('pregunta', 'pregunta__autor')
         return queryset
