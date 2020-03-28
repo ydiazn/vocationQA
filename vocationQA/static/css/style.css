@@ -1,8 +1,8 @@
 body {
     font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     color: #676a6c;
-    background-color: #f3f3f4;
+    background-color: #f8f9fa;
 }
 
 a:hover, a:focus {
@@ -11,4 +11,21 @@ a:hover, a:focus {
 
 a {
     cursor: pointer;
+}
+
+.navbar-header a {
+    font-size: 25px;
+}
+
+#site-box-search {
+    width: auto;
+}
+
+#site-mark {
+    background-color: #555b62;
+    padding: 2px 7px;
+}
+
+#site-description {
+    color: white;
 }

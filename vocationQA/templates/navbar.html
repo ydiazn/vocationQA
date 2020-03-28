@@ -1,0 +1,36 @@
+{% block navbar %}
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" role="navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarToggler">
+        <div>
+            <a class="navbar-brand" href="{% url 'qa:index' %}">
+                <span id="site-mark">VocationQA</span>
+            </a>
+            <span id="site-description">Orientación vocacional y profesional en linea</span>
+        </div>
+        <form class="form-inline my-2 my-lg-0">
+            <input
+                id="site-box-search"
+                class="form-control mr-sm-2"
+                type="search"
+                placeholder="Buscar ..."
+                aria-label="Buscar ..."
+                maxlength="240"
+            >
+        </form>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">
+                <i class="fa fa-envelope-o fa-2x"></i>
+            </a>
+            <a class="nav-item nav-link active" href="#">
+                <i class="fa fa-bell-o fa-2x"></i>
+            </a>
+            <a class="nav-item nav-link active" href="#">
+                <i class="fa fa-sign-in fa-2x"></i> Acceder
+            </a>
+        </div>
+    </div>
+</nav>
+{% endblock navbar %}
