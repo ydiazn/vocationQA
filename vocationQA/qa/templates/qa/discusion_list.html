@@ -10,19 +10,19 @@
             {% for discusion in object_list %}
             <div class="discusion-item">
                 <div class="row">
-                    <div class="col-lg-1">
+                    <div class="col-sm-2 col-lg-1">
                         <div class="text-center">
                             <h4>{{ discusion.pregunta.votos_positivos }}</h4>
                             <small>Votos</small>
                         </div>
                     </div>
-                    <div class="col-lg-1">
+                    <div class="col-sm-2 col-lg-1">
                         <div class="text-center">
                             <h4>{{ discusion.respuestas__count }}</h4>
                             <small>Respuestas</small>
                         </div>
                     </div>
-                    <div class="col-lg-10">
+                    <div class="col-sm-8 col-lg-10">
                         <a class="discusion-titulo" href="#"> 
                             {{ discusion.pregunta.titulo }}
                         </a>
