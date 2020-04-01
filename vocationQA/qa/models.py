@@ -26,9 +26,6 @@ class Discusion(TimeStampedModel):
     class Meta:
         ordering = ['-pregunta__created']
 
-    def __str__(self):
-        return str(self.pregunta)
-
 
 class Publicacion(TimeStampedModel):
     TIPO_PUBLICACION = (

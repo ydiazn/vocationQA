@@ -14,5 +14,10 @@ class RespuestaAdmin(admin.ModelAdmin):
     )
 
 
+class RespuestaAdmin(admin.ModelAdmin):
+    list_display = ('id', 'pregunta')
+
+
 admin.site.register(models.Pregunta, PreguntaAdmin)
 admin.site.register(models.Respuesta, RespuestaAdmin)
+admin.site.register(models.Discusion, RespuestaAdmin)

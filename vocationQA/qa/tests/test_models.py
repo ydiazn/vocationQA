@@ -33,7 +33,9 @@ class QuestionTest(TestCase):
 class ThreadTest(TestCase):
     def test_str(self):
         pregunta = factories.PreguntaFactory.create(titulo='titulo')
-        self.assertEqual(str(pregunta.discusion), 'titulo')
+        self.assertEqual(models.Discusion.objects.count(), 1)
+        discusion = models.Discusion.objects.first()
+        self.assertEqual(pregunta.discusion, discusion)
 
 
 class AswersTest(TestCase):
