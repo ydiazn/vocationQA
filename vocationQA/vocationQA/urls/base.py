@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
 import qa.urls
+import authentication.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(qa.urls, namespace='qa'))
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', include(qa.urls, namespace='qa')),
+    path('authentication/', include(authentication.urls, namespace='authentication'))
 ]

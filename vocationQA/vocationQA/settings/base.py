@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+from django.urls import reverse
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 FILE = os.path.abspath(__file__)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(FILE)))
@@ -35,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'crispy_forms',
-    'qa.apps.QaConfig'
+    'qa.apps.QaConfig',
+    'authentication.apps.AuthenticationConfig'
 ]
 
 MIDDLEWARE = [
@@ -129,7 +132,10 @@ STATICFILES_DIRS = [
 ]
 
 # django.contrib.auth.mixins 
-LOGIN_URL = '/'
+LOGIN_URL = '/accounts/login'
 
 # crispy-forms settings
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

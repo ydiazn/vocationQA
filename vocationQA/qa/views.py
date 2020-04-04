@@ -1,12 +1,5 @@
-# from django.shortcuts import render
 from django.urls import reverse
-# from django import http
-# 
-# from django.views.generic.edit import CreateView
-# from django.views.generic.detail import DetailView
-# from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
-# from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect
 from django.views.generic.list import ListView

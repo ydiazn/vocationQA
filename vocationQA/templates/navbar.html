@@ -27,9 +27,15 @@
             <a class="nav-item nav-link active" href="#">
                 <i class="fa fa-bell-o fa-2x"></i>
             </a>
-            <a class="nav-item nav-link active" href="#">
+            {% if user.is_authenticated %}
+            <a class="nav-item nav-link active" href="{% url 'logout' %}">
+                <i class="fa fa-sign-out fa-2x"></i> Salir
+            </a>
+            {% else %}
+            <a class="nav-item nav-link active" href="{% url 'login' %}">
                 <i class="fa fa-sign-in fa-2x"></i> Acceder
             </a>
+            {% endif %}
         </div>
     </div>
 </nav>
