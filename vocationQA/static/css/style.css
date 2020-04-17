@@ -43,3 +43,28 @@ a {
 .btn-white {
     background-color: white;
 }
+
+.discusion-wrapper {
+    font-size: 14px;
+}
+
+.question-wrapper {
+    background-color: white;
+    box-shadow: 0 12px 15px -6px #777;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+#answers-count{
+    margin-bottom: 15px;
+}
+
+.answer-wrapper {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 5px;
+}
+
+.answer-list {
+    padding-left: 20px;
+}

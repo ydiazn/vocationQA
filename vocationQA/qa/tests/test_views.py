@@ -51,6 +51,19 @@ class QuestionListTest(TestCase):
         self.assertEqual(list(context['object_list']), discusions)
 
 
+class QuestionDetail(TestCase):
+
+    def test_question_detail(self):
+        question = factories.PreguntaFactory.create()
+
+        response = self.client.get(
+            '/qa/question/{}/{}/'.format(question.pk, question.slug)
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context_data['object'], question.discusion)
+
+
 class QuestionCreateFormTest(TestCase):
     def test_anonymous_user_test(self):
         response = self.client.get('/qa/question/add')

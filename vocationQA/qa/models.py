@@ -27,7 +27,7 @@ class Discusion(TimeStampedModel):
         ordering = ['-pregunta__created']
 
 
-class Publicacion(TimeStampedModel):
+class Publicacion(TimeStampedModel, ContarVotos):
     TIPO_PUBLICACION = (
         (0, 'comentario'),
         (1, 'pregunta'),
@@ -40,7 +40,7 @@ class Publicacion(TimeStampedModel):
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
-class Pregunta(ContarVotos, Publicacion):
+class Pregunta(Publicacion):
     titulo = models.CharField(max_length=150)
     discusion = models.OneToOneField(
         Discusion, on_delete=models.CASCADE)
@@ -68,7 +68,7 @@ class Pregunta(ContarVotos, Publicacion):
         return self.autor == user
 
 
-class Respuesta(ContarVotos, Publicacion):
+class Respuesta(Publicacion):
     discusion = models.ForeignKey(
         to=Discusion, on_delete=models.CASCADE, related_name='respuestas')
     aceptada = models.BooleanField(default=False)
@@ -81,7 +81,7 @@ class Respuesta(ContarVotos, Publicacion):
         super().save(*args, **kwargs)
 
 
-class Comentario(ContarVotos, Publicacion):
+class Comentario(Publicacion):
     publicacion = models.ForeignKey(
        to=Publicacion,
        on_delete=models.CASCADE,

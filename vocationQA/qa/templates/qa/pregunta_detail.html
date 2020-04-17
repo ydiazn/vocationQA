@@ -1,0 +1,13 @@
+{% load markdownify %}
+<div class="row">
+    <div class="col-lg-12">
+        <div>
+            <h2>{{ discusion.pregunta.titulo }}</h2>
+            <p>Realizada: {{ discusion.pregunta.created | date }} </p>
+            <hr>
+            <div>
+                {{ discusion.pregunta.cuerpo|markdownify }}
+            </div>
+        </div>
+    </div>
+</div>

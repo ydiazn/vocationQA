@@ -44,3 +44,9 @@ class CrearPreguntaView(LoginRequiredMixin, CreateView):
         return {
             'autor': self.request.user.id,
         }
+
+
+class DetalleDiscusionView(DetailView):
+    queryset = models.Discusion.objects.annotate(Count('respuestas'))
+    slug_field = 'pregunta__slug'
+    query_pk_and_slug = True
