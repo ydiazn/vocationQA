@@ -58,7 +58,9 @@ class Pregunta(ContarVotos, Publicacion):
         '''
         self.tipo = 1
         self.slug = slugify(self.titulo)
-        self.discusion = Discusion.objects.create()
+        # Set discusion to new question
+        if not self.pk:
+            self.discusion = Discusion.objects.create()
 
         super().save(*args, **kwargs)
 

@@ -4,8 +4,10 @@ from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
+from django.views.generic.detail import DetailView
 
 from . import models
+from . import forms
 
 
 class IndexView(ListView):
@@ -32,14 +34,13 @@ class IndexView(ListView):
 
 
 class CrearPreguntaView(LoginRequiredMixin, CreateView):
-    model = models.Pregunta
-    fields = ['titulo', 'cuerpo']
+    form_class = forms.PreguntaForm
+    template_name = 'qa/pregunta_form.html'
 
     def get_success_url(self):
         return reverse('qa:index')
 
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.autor = self.request.user
-        self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
+    def get_initial(self):
+        return {
+            'autor': self.request.user.id,
+        }
