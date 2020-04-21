@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/preguntas.css' %}"/>
 {% endblock css %}
@@ -15,6 +16,15 @@
                     {{ discusion.respuestas__count }} Respuestas
                 </h3>
                 {% include 'qa/respuestas_detail.html' %}
+            </div>
+            <hr>
+            <div>
+                <form method="post" action="{% url 'qa:discusion-detail' pk=object.pk slug=object.pregunta.slug %}">{% csrf_token %}
+                    {{ answer_form | crispy }}
+                    <button class="btn btn-success" type="submit">
+                        <i class="fa fa-check"></i> Publicar tu respuesta
+                    </button>
+                </form>
             </div>
         </div>
     </div>

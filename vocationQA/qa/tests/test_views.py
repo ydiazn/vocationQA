@@ -51,7 +51,7 @@ class QuestionListTest(TestCase):
         self.assertEqual(list(context['object_list']), discusions)
 
 
-class QuestionDetail(TestCase):
+class QuestionDetailTest(TestCase):
 
     def test_question_detail(self):
         question = factories.PreguntaFactory.create()
@@ -127,3 +127,69 @@ class QuestionCreateTest(TestCase):
         self.assertEqual(pregunta.titulo, 'sdasdad asdjk aksjd')
         self.assertEqual(pregunta.cuerpo, 'asldj askdj as lkasjd')
         self.assertEqual(pregunta.autor, user)
+
+
+class AnswerCreateTest(TestCase):
+    def test_anonymous_user(self):
+        response = self.client.post('/qa/question/1/ejemplo/', {})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.url,
+            '{}?next=/qa/question/1/ejemplo/'.format(settings.LOGIN_URL)
+        )
+        self.assertEqual(models.Respuesta.objects.count(), 0)
+
+    def test_no_body(self):
+        user = factories.UserFactory.create()
+        question = factories.PreguntaFactory.create()
+        self.client.login(username=user.username, password='secret')
+        response = self.client.post(
+            '/qa/question/{}/{}/'.format(question.discusion.id, question.slug), {})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(models.Respuesta.objects.count(), 0)
+
+    def test_no_discusion(self):
+        user = factories.UserFactory.create()
+        question = factories.PreguntaFactory.create()
+        self.client.login(username=user.username, password='secret')
+        response = self.client.post(
+            '/qa/question/{}/{}/'.format(question.discusion.id, question.slug),
+            {
+                'cuerpo': 'cuerpo'
+            }
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(models.Respuesta.objects.count(), 0)
+
+    def test_no_author(self):
+        user = factories.UserFactory.create()
+        question = factories.PreguntaFactory.create()
+        self.client.login(username=user.username, password='secret')
+        response = self.client.post(
+            '/qa/question/{}/{}/'.format(question.discusion.id, question.slug),
+            {
+                'cuerpo': 'cuerpo',
+                'discusion': question.discusion.id
+            }
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(models.Respuesta.objects.count(), 0)
+
+    def test_success_creation(self):
+        user = factories.UserFactory.create()
+        question = factories.PreguntaFactory.create()
+        self.client.login(username=user.username, password='secret')
+        response = self.client.post(
+            '/qa/question/{}/{}/'.format(question.discusion.id, question.slug),
+            {
+                'cuerpo': 'cuerpo',
+                'discusion': question.discusion.id,
+                'autor': user.id
+            }
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(models.Respuesta.objects.count(), 1)

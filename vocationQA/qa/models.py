@@ -77,6 +77,7 @@ class Respuesta(Publicacion):
         ordering = ['-created']
 
     def save(self, *args, **kwargs):
+        self.tipo = 2
         self.slug = slugify(self.cuerpo[:50])
         super().save(*args, **kwargs)
 

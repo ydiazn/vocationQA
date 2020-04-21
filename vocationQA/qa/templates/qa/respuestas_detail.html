@@ -6,8 +6,18 @@
         <div class="col-lg-12">
             <div>
                 <div>
-                    <p>Publicada: {{ discusion.pregunta.created | date }} </p>
-                    {{ respuesta.cuerpo|markdownify }}
+                    <div>
+                        <span>
+                            <i class="fa fa-user"></i> {{ discusion.pregunta.autor }}
+                        </span>
+                        <span>
+                            <i class="fa fa-clock-o"></i> {{ discusion.pregunta.created | date }}
+                        </span>
+                        <hr>
+                    </div>
+                    <div>
+                        {{ respuesta.cuerpo|markdownify }}
+                    </div>
                 </div>
             </div>
         </div>
