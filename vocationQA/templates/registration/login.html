@@ -2,6 +2,9 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
+<a class="pull-right" title="Ir a al inicio" href="{% url 'qa:index' %}">
+    <i class="fa fa-3x fa-home"></i>
+</a>
 <h4>Bienvenido a VocationQA</h4>
 {% if next %}
     {% if user.is_authenticated %}
@@ -21,9 +24,6 @@
         </button>
         <p> No tienes una cuenta? </p>
         <a class="btn btn-success btn-block" href="{% url 'authentication:new_user' %}">Crea una cuenta</a>
-        <a class="btn btn-info btn-block" href="{% url 'qa:index' %}">
-            <i class="fa fa-home"></i> Ir a inicio
-        </a>
     </form>
 </div>
 {% endblock body %}
