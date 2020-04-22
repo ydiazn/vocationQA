@@ -7,7 +7,6 @@ from django.views.generic.edit import CreateView, FormMixin
 from django.views.generic.detail import (
     DetailView, SingleObjectTemplateResponseMixin, SingleObjectMixin)
 from django.views.generic.base import View
-from authentication.views import LoginRequiredMixin as LoginRequiredMixinWithNext
 
 from . import models
 from . import forms
