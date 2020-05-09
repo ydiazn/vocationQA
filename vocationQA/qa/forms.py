@@ -22,3 +22,13 @@ class RespuestaForm(forms.ModelForm):
             'autor': forms.HiddenInput(),
             'discusion': forms.HiddenInput()
         }
+
+
+class FlagginForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Publicacion
+        fields = ['observaciones']
+        widgets = {
+            'observaciones': forms.CheckboxSelectMultiple,
+        }

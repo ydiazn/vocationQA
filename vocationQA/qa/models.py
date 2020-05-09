@@ -20,6 +20,14 @@ class Etiqueta(models.Model):
     nombre = models.CharField(max_length=150)
 
 
+class Flag(models.Model):
+    motivo = models.CharField(max_length=150)
+    descripcion = models.TextField()
+
+    def __str__(self):
+        return self.motivo
+
+
 class Discusion(TimeStampedModel):
     cerrada = models.BooleanField(default=False)
 
@@ -38,6 +46,11 @@ class Publicacion(TimeStampedModel, ContarVotos):
     cuerpo = models.TextField()
     autor = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    observaciones = models.ManyToManyField(
+        Flag,
+        through='Observacion',
+        through_fields=('publicacion', 'flag')
+    )
 
 
 class Pregunta(Publicacion):
@@ -88,3 +101,12 @@ class Comentario(Publicacion):
        on_delete=models.CASCADE,
        related_name='comentarios'
     )
+
+
+class Observacion(TimeStampedModel):
+    usuario = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    publicacion = models.ForeignKey(
+        to=Publicacion, on_delete=models.PROTECT)
+    flag = models.ForeignKey(
+        to=Flag, on_delete=models.PROTECT)

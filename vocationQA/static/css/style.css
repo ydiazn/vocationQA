@@ -68,3 +68,11 @@ a {
 .answer-list {
     padding-left: 20px;
 }
+
+.action-container {
+    margin-top: 20px;
+}
+
+.action-list button{
+    font-size: 12px;
+}

@@ -10,5 +10,10 @@ urlpatterns = [
         views.DetalleDiscusionView.as_view(),
         name='discusion-detail'
     ),
+    path(
+        'qa/question/<int:pk>/<slug:slug>/flaggin/',
+        views.FlagginView.as_view(),
+        name='pregunta-flaggin'
+    )
 ]
 
