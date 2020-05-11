@@ -118,7 +118,8 @@ class QuestionCreateTest(TestCase):
         self.client.login(username=user.username, password='secret')
         response = self.client.post('/qa/question/add', {
             'titulo': 'sdasdad asdjk aksjd',
-            'cuerpo': 'asldj askdj as lkasjd'
+            'cuerpo': 'asldj askdj as lkasjd',
+            'autor': user.id
         })
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url,'/')
