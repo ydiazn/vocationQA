@@ -19,7 +19,7 @@
             </div>
             <hr>
             <div>
-                <form method="post" action="{% url 'qa:discusion-detail' pk=object.pk slug=object.pregunta.slug %}">{% csrf_token %}
+                <form method="post" action="{% url 'qa:discusion-detail' pk=discusion.pk slug=discusion.pregunta.slug %}">{% csrf_token %}
                     {{ answer_form | crispy }}
                     <button class="btn btn-success" type="submit">
                         <i class="fa fa-check"></i> Publicar tu respuesta

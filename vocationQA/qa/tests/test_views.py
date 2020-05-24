@@ -194,3 +194,73 @@ class AnswerCreateTest(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(models.Respuesta.objects.count(), 1)
+
+
+class FlagginTest(TestCase):
+    def test_anonymous_user_test(self):
+        pregunta = factories.PreguntaFactory.create()
+        url = '/qa/discusion/{}/post/{}/flaggin/'.format(
+            pregunta.discusion.id, pregunta.publicacion_ptr.id)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.url,'{}?next={}'.format(settings.LOGIN_URL, url))
+
+    def test_form(self):
+        user = factories.UserFactory.create()
+        pregunta = factories.PreguntaFactory.create()
+        url = '/qa/discusion/{}/post/{}/flaggin/'.format(
+            pregunta.discusion.id, pregunta.publicacion_ptr.id)
+        self.client.login(username=user.username, password='secret')
+
+        response = self.client.get(url)
+        form = response.context_data['form']
+        self.assertDictEqual(form.initial, {
+            'publicacion': pregunta.publicacion_ptr.id,
+            'usuario': user.id
+        })
+        self.assertEqual(response.status_code, 200)
+
+
+    def test_submit_without_flag(self):
+        user = factories.UserFactory.create()
+        self.client.login(username=user.username, password='secret')
+        pregunta = factories.PreguntaFactory.create()
+        post = pregunta.publicacion_ptr
+        url = '/qa/discusion/{}/post/{}/flaggin/'.format(
+            pregunta.discusion.id, pregunta.publicacion_ptr.id)
+
+        response = self.client.post(
+            url,
+            {
+                'usuario': user.id,
+                'publicacion': post.id,
+            }
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(models.Observacion.objects.count(), 0)
+
+    def test_success_submit(self):
+        user = factories.UserFactory.create()
+        self.client.login(username=user.username, password='secret')
+        flag = factories.FlagFactory.create()
+        pregunta = factories.PreguntaFactory.create()
+        post = pregunta.publicacion_ptr
+        url = '/qa/discusion/{}/post/{}/flaggin/'.format(
+            pregunta.discusion.id, pregunta.publicacion_ptr.id)
+
+        response = self.client.post(
+            url,
+            {
+                'usuario': user.id,
+                'publicacion': post.id,
+                'flag': flag.id
+            }
+        )
+
+        success_url = '/qa/question/{}/{}/'.format(
+            pregunta.discusion.id, pregunta.slug)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, success_url)
+        self.assertEqual(models.Observacion.objects.count(), 1)

@@ -46,3 +46,19 @@ class RespuestaFactory(factory.django.DjangoModelFactory):
     cuerpo = factory.Faker('text')
     autor = factory.SubFactory(UserFactory)
     discusion = factory.SubFactory(DiscusionFactory)
+
+
+class FlagFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Flag
+
+    descripcion = factory.Faker('text')
+    motivo = factory.Faker('sentence', nb_words=10)
+
+
+class ObservationFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Observacion
+
+    usuario = factory.SubFactory(UserFactory)
+    flag = factory.SubFactory(FlagFactory)

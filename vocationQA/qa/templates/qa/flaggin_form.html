@@ -4,14 +4,19 @@
 {% block body%}
 <div class="row">
     <div class="col-lg-12">
-        <h1>Nueva pregunta</h1>
+        <h1>Realizar observación</h1>
         <div class="card" style="padding:20px;">
             <form method="post">{% csrf_token %}
                 {{ form | crispy }}
+                <a class="btn btn-warning"
+                    href="{% url 'qa:discusion-detail' pk=discusion.pk slug=discusion.pregunta.slug %}"
+                >
+                    <i class="fa fa-cancel"></i> Cancelar
+                </a>
                 <button class="btn btn-success" type="submit">
-                    <i class="fa fa-check"></i> Crear
+                    <i class="fa fa-check"></i> Aceptar
                 </button>
-            </form>
+            </form> 
         </div>
     </div>
 </div>

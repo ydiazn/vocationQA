@@ -2,8 +2,9 @@ from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, FormMixin
+from django.views.generic.edit import CreateView, FormMixin, UpdateView
 from django.views.generic.detail import (
     DetailView, SingleObjectTemplateResponseMixin, SingleObjectMixin)
 from django.views.generic.base import View
@@ -63,7 +64,10 @@ class DiscusionView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        data = {'answer_form': self.get_form()}
+        data = {
+            'answer_form': self.get_form(),
+            'observaciones': self.object.pregunta.publicacion_ptr.observaciones.all()
+        }
         context.update(data)
         return context
 
@@ -121,3 +125,73 @@ class DetalleDiscusionView(View):
     def post(self, request, *args, **kwargs):
         view = AnswerView.as_view()
         return view(request, *args, **kwargs)
+
+
+class FlagginCreateView(LoginRequiredMixin, CreateView):
+
+    model = models.Publicacion
+    form_class = forms.FlagginForm
+    template_name = 'qa/flaggin_form.html'
+
+    def get_thread(self, **kwargs):
+        return get_object_or_404(
+            models.Discusion, pk=kwargs.get('discusion_pk'))
+    
+    def get_post(self, **kwargs):
+        return get_object_or_404(
+            models.Publicacion, pk=kwargs.get('post_pk'))
+
+    def get(self, request, *args, **kwargs):
+        self.publicacion = self.get_post(**kwargs)
+        self.thread = self.get_thread(**kwargs)
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.publicacion = self.get_post(**kwargs)
+        self.thread = self.get_thread(**kwargs)
+        return super().post(request, *args, **kwargs)
+
+    def get_initial(self):
+        return {
+            'usuario': self.request.user.id,
+            'publicacion': self.publicacion.id
+        }
+
+    def get_success_url(self):
+        '''
+        Return url to redirect after success answer creation
+        '''
+        return reverse(
+            'qa:discusion-detail',
+            kwargs={'pk': self.thread.pk, 'slug': self.thread.pregunta.slug}
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        data = {'discusion': self.thread}
+        context.update(data)
+        return context
+
+
+class FlagsView(LoginRequiredMixin, ListView):
+    '''
+    Listado de las discusiones
+    '''
+
+    def get(self, request, *args, **kwargs):
+        self.discusion = get_object_or_404(
+            models.Discusion, pk=kwargs.get('discusion_pk'))
+        self.publicacion = get_object_or_404(
+            models.Publicacion, pk=kwargs.get('post_pk'))
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        queryset = self.publicacion.observaciones.filter(
+            observacion__usuario=self.request.user
+        )
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data.update({'discusion': self.discusion})
+        return data

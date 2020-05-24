@@ -1,4 +1,5 @@
 {% load markdownify %}
+{% load crispy_forms_tags %}
 <div class="row">
     <div class="col-lg-12">
         <div>
@@ -7,6 +8,22 @@
             <hr>
             <div>
                 {{ discusion.pregunta.cuerpo|markdownify }}
+            </div>
+            <div class="action-container">
+                <div class="pull-right">
+                    <a href="{% url 'qa:flaggin' discusion_pk=discusion.pk post_pk=discusion.pregunta.publicacion_ptr.pk %}"
+                        class="btn btn-xs btn-warning">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+                <h5><i class="fa fa-flag"></i> Observaciones</h5>
+                <div>
+                {% for observacion in observaciones %}
+                <span class="tag tag-warning">{{ observacion.motivo}}</span>
+                {% empty %}
+                <small> Sin observaciones </small>
+                {% endfor %}
+                </div>
             </div>
         </div>
     </div>

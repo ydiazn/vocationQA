@@ -21,3 +21,6 @@ class RespuestaAdmin(admin.ModelAdmin):
 admin.site.register(models.Pregunta, PreguntaAdmin)
 admin.site.register(models.Respuesta, RespuestaAdmin)
 admin.site.register(models.Discusion, RespuestaAdmin)
+
+admin.site.register(models.Observacion)
+admin.site.register(models.Flag)
