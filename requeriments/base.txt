@@ -8,6 +8,7 @@ django-registration
 django-braces
 django-vanilla-views
 django-filter
+django-markdownify
 
 # testing
 factory_boy
@@ -23,4 +24,3 @@ Sphinx
 # time
 python-dateutil
 
-numpy

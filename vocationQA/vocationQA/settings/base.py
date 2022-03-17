@@ -54,6 +54,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'vocationQA.urls.base'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+    }
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
