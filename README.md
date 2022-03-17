@@ -30,26 +30,42 @@ If you are behind a proxy set proxy virtual environment before installation with
 
 
 ## Project config
+You must set following environment variable:
 
-You must set following environment variables:
+* VOCATION_SECRET_KEY
 
-* DB_NAME
-* DB_HOST
-* DB_PORT
-* DB_USER
-* DB_PASSWORD
-* SECRET_KEY
-* DJANGO_SETTINGS_MODULE
+Virtual environments can be set in self virtual environment.
+For example for set DB_NAME you can type
 
-Virtual environment can be set in self virtual environment.
-For example for set DB_NAME type
-
-    echo 'export DB_NAME=vocationQA' >> venv/bin/activate
+    echo 'export VOCATION_SECRET_KEY="76jiorwu6=1&hu=)-cc$b-by-o16#mpcy-frp=^jvp(#=5_"' >> venv/bin/activate
 
 You can edit activate script directly.
-For custom installation set DJANGO_SETTINGS_MODULE variable as following
 
-   echo 'export DJANGO_SETTINGS_MODULE='vocationQA.settings.local' >> venv/bin/activate
+For use postgresql you can change database setting by 
+
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get("VOCATION_DB_NAME"),
+        'HOST': os.environ.get("VOCATION_DB_HOST"),
+        'PORT': os.environ.get("VOCATION_DB_PORT"),
+        'USER': os.environ.get("VOCATION_DB_USER"),
+        'PASSWORD': os.environ.get("VOCATION_DB_PASSWORD"),
+        'ATOMIC_REQUESTS': True,
+    }
+}
+```
+and set the following environment variables:
+
+* VOCATION_DB_NAME
+* VOCATION_DB_HOST
+* VOCATION_DB_PORT
+* VOCATION_DB_USER
+* VOCATION_DB_PASSWORD
+
+You must deactivate and active again the virtual environment
+after set environment variables in virtual environment. 
 
 ## Run project
 
@@ -69,5 +85,4 @@ Finally run django web server::
     python vocationQA/manage.py runserver
 
 and open web browser at http://127.0.0.1:8000
-
 
